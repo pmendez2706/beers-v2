@@ -1,0 +1,34 @@
+@import '_palette.scss';
+
+//global settings 
+html,
+body {
+  height: 100%;
+}
+
+$percent: '%';
+$prefixes: ('-webkit-', '-ms-', '-moz-');
+
+//box sizing
+@mixin boxSizing($val) {
+  @each $prefix in $prefixes {
+    @if($prefix != nth($prefixes, 2)) {
+        #{$prefix + box-sizing}: $val;
+    }
+  }
+  box-sizing: $val;
+}
+
+html {
+  @include boxSizing(border-box);
+  scroll-behavior: smooth;
+}
+  *, *:before, *:after {
+  @include boxSizing(inherit);
+}
+
+body {
+  margin: 0;
+  font-family: Lato, 'Helvetica Neue', sans-serif;
+}
+

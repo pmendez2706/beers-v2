@@ -1,0 +1,92 @@
+$palette:(
+  gray:#f4f4f4,
+  green:#99b898,
+  yellow:#feceab,
+  orange:#ff847c,
+  red:#e84a5f
+);
+ 
+ // gen primary color
+@each $name, $color in $palette {
+  %#{$name}{
+    color:$color;
+  }
+  .#{$name} {
+    @extend %#{$name};
+  }
+  //bgcolor
+  %bg-#{$name}{
+    background-color:$color;
+  }
+  .bg-#{$name}{
+    @extend %bg-#{$name};
+  }
+  //border color
+  %bc-#{$name}{
+    border-color:$color;
+  }
+  .bc-#{$name}{
+    @extend %bc-#{$name};
+  }
+}
+// gen color variants
+//light
+@function setTint($color, $percent){
+@return mix(white, $color, $percent);
+};
+//dark
+@function setShade($color, $percent){
+@return mix(black, $color, $percent);
+};
+ 
+@mixin genPalette($n, $c, $p){
+  @each $name, $color in $palette {
+    @if ($n == $name){
+      //color
+      %#{$name}-light-#{$p}{
+        color: setTint($c, $p);
+      }
+      %#{$name}-dark-#{$p}{
+        color: setShade($c, $p);
+      }
+      .#{$name}-light-#{$p}{
+        @extend %#{$name}-light-#{$p};
+      }
+      .#{$name}-dark-#{$p}{
+        @extend %#{$name}-dark-#{$p};
+      }
+      //bgcolor
+      %bg-#{$name}-light-#{$p}{
+        background-color: setTint($c, $p);
+      }
+      %bg-#{$name}-dark-#{$p}{
+        background-color: setShade($c, $p);
+      }
+      .bg-#{$name}-light-#{$p}{
+        @extend %bg-#{$name}-light-#{$p};
+      }
+      .bg-#{$name}-dark-#{$p}{
+        @extend %bg-#{$name}-dark-#{$p};
+      }
+      //border color
+      %bc-#{$name}-light-#{$p}{
+        border-color: setTint($c, $p);
+      }
+      %bc-#{$name}-dark-#{$p}{
+        border-color: setShade($c, $p);
+      }
+      .bc-#{$name}-light-#{$p}{
+        @extend %bc-#{$name}-light-#{$p};
+      }
+      .bc-#{$name}-dark-#{$p}{
+        @extend %bc-#{$name}-dark-#{$p};
+      }
+    }
+  }
+}
+ 
+@each $name, $color in $palette {
+  @for $i from 1 through 3 {
+    @include genPalette($name, $color,  $i * 25);
+  };
+}
