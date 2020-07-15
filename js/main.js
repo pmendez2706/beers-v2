@@ -1,7 +1,8 @@
 var beersJson = 'https://raw.githubusercontent.com/pablz/logourl/master/beers.json',
 assetsJson = 'https://raw.githubusercontent.com/pablz/logourl/master/assets.json'
 assetsArr = [],
-beersArr = [];
+beersArr = [],
+introBg = document.querySelector('.intro-img');
 
 (()=>{
     getBeers()
@@ -41,11 +42,16 @@ function getAssets(){
     })
     .finally(()=>{//fynally nos permite hacer algo si todo salió bien
         console.log('Llegó los assets!'); 
+        setBg();
     })
 };
 
 
-
+function setBg(){
+    for(let item of assetsArr){
+       introBg.src=item.bgs[2].img;
+    }
+};
 
 
 
